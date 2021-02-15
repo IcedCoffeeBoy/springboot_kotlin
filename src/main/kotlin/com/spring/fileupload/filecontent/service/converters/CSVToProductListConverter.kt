@@ -18,35 +18,37 @@ import java.time.format.DateTimeParseException
 import java.util.stream.Collectors
 
 
-class CSVToProductListConverter : Converter<MultipartFile, List<Product>?> {
+class CSVToProductListConverter : Converter<MultipartFile, List<Product>> {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val csvFormat = CSVFormat.newFormat(',').withQuote('"').withFirstRecordAsHeader()
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/yyyy H:mm")
-    override fun convert(file: MultipartFile): List<Product>? {
+    override fun convert(file: MultipartFile): List<Product> {
         try {
             val inputStream: InputStream = BufferedInputStream(file.inputStream)
             val csvParser = CSVParser.parse(inputStream, StandardCharsets.UTF_8, csvFormat)
-            return csvParser.records.stream().map { record: CSVRecord -> convertRecordToProduct(record) }.collect(Collectors.toList())
+            return csvParser.records.stream()
+                .map { record: CSVRecord ->
+                    convertRecordToProduct(record)
+                }.collect(Collectors.toList())
         } catch (e: IOException) {
-            e.printStackTrace()
             logger.error("Unable to read CSV format")
+            throw BusinessException("Error trying to read the CSV format. Please check your CSV format.")
         }
-        return null
     }
 
     private fun convertRecordToProduct(record: CSVRecord): Product {
         return try {
             Product(
-                    id = null,
-                    invoiceNo = record["InvoiceNo"],
-                    stockCode = record["StockCode"],
-                    description = record["Description"],
-                    quantity = record["Quantity"].toLong(),
-                    invoiceDate = LocalDateTime.from(dateTimeFormatter.parse(record["InvoiceDate"])),
-                    unitPrice = record["UnitPrice"].toDouble(),
-                    customerID = record["CustomerID"],
-                    country = record["Country"],
-                    fileRecordId = null
+                id = null,
+                invoiceNo = record["InvoiceNo"],
+                stockCode = record["StockCode"],
+                description = record["Description"],
+                quantity = record["Quantity"].toLong(),
+                invoiceDate = LocalDateTime.from(dateTimeFormatter.parse(record["InvoiceDate"])),
+                unitPrice = record["UnitPrice"].toDouble(),
+                customerID = record["CustomerID"],
+                country = record["Country"],
+                fileRecordId = null
             )
         } catch (e: DateTimeParseException) {
             logger.error(e.toString())

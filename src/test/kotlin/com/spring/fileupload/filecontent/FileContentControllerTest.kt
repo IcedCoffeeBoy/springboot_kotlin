@@ -51,4 +51,45 @@ class FileContentControllerTest {
                 .file(file)
         ).andExpect(MockMvcResultMatchers.status().is4xxClientError)
     }
+
+    @Test
+    @Order(3)
+    fun postEmptyFileShouldReturnCreated() {
+        val f = File(TestFileData.DATA_PATH_2)
+        val fi = FileInputStream(f)
+        val file = MockMultipartFile("file", f.name, "multipart/form-data", fi)
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .multipart("/api/v1/file")
+                .file(file)
+        ).andExpect(MockMvcResultMatchers.status().isCreated)
+    }
+
+    @Test
+    @Order(4)
+    fun postLargeFileShouldReturnCreated() {
+        val f = File(TestFileData.DATA_PATH_3)
+        val fi = FileInputStream(f)
+        val file = MockMultipartFile("file", f.name, "multipart/form-data", fi)
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .multipart("/api/v1/file")
+                .file(file)
+        ).andExpect(MockMvcResultMatchers.status().isCreated)
+    }
+
+    @Test
+    @Order(5)
+    fun postErrorousFileShouldReturn4xx() {
+        val f = File(TestFileData.DATA_PATH_4)
+        val fi = FileInputStream(f)
+        val file = MockMultipartFile("file", f.name, "multipart/form-data", fi)
+        mockMvc.perform(
+            MockMvcRequestBuilders
+                .multipart("/api/v1/file")
+                .file(file)
+        ).andExpect(MockMvcResultMatchers.status().is4xxClientError)
+    }
+
+
 }

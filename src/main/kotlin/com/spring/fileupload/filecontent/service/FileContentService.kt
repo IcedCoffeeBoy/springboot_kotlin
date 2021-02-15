@@ -12,10 +12,11 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class FileContentService {
     private val csvToProductListConverter = CSVToProductListConverter()
-    fun convertToProductList(file: MultipartFile, record: FileRecord?): List<Product?> {
+
+    fun convertToProductList(file: MultipartFile, record: FileRecord): List<Product?> {
         val products = csvToProductListConverter.convert(file)
-        products!!.forEach { product ->
-            product.fileRecordId = record!!.id
+        products.forEach { product ->
+            product.fileRecordId = record.id
         }
         return products
     }
