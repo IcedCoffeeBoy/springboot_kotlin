@@ -14,10 +14,10 @@ data class ProductFindRequest(
     var directions: Array<Sort.Direction>? = null,
 
     @field:DateTimeFormat(pattern = "yyyy-MM-dd")
-    var fromDate: LocalDate?,
+    var fromDate: LocalDate? = null,
 
     @field:DateTimeFormat(pattern = "yyyy-MM-dd")
-    var toDate: LocalDate?,
+    var toDate: LocalDate? = null,
     var fromPrice: Double? = null,
     var toPrice: Double? = null,
     var minQuantity: Long? = null,

@@ -90,6 +90,5 @@ class FileContentControllerTest {
                 .file(file)
         ).andExpect(MockMvcResultMatchers.status().is4xxClientError)
     }
-
-
 }
+

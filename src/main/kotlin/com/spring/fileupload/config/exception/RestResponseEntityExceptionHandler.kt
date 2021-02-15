@@ -1,6 +1,7 @@
 package com.spring.fileupload.config.exception
 
 import com.spring.fileupload.common.exception.BusinessException
+import com.spring.fileupload.common.exception.NotFoundException
 import com.spring.fileupload.common.response.ErrorResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -16,24 +17,40 @@ import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 @ControllerAdvice
-class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
+class RestResponseEntityExceptionHandler() : ResponseEntityExceptionHandler() {
     private val log = LoggerFactory.getLogger(javaClass)
 
     @ExceptionHandler(MaxUploadSizeExceededException::class)
-    fun handleMaxSizeException(exc: MaxUploadSizeExceededException?): ResponseEntity<String> {
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("File too large!")
+    fun handleMaxSizeException(exc: MaxUploadSizeExceededException?): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+            .body(ErrorResponse(error = "FILE_ERROR", reason = "File too large, exceeded max size"))
+    }
+
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNotFoundException(exc: NotFoundException, request: HttpServletRequest?): ResponseEntity<ErrorResponse> {
+        logger.error(exc)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+            ErrorResponse(error = "NOT_FOUND", reason = exc.message, path = request?.requestURI)
+        )
     }
 
     @ExceptionHandler(value = [BusinessException::class])
-    protected fun handleBusinessException(exception: BusinessException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
+    protected fun handleBusinessException(
+        exception: BusinessException,
+        request: HttpServletRequest
+    ): ResponseEntity<ErrorResponse> {
         logger.error(exception.toString())
-        val error = ErrorResponse(exception.message)
-        error.reason = exception.message
-        error.path = request.requestURI
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(error)
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
+            ErrorResponse(error = "CUSTOMISED_ERROR", reason = exception.message, path = request.requestURI)
+        )
     }
 
-    override fun handleHttpMessageNotReadable(exception: HttpMessageNotReadableException, headers: HttpHeaders, status: HttpStatus, request: WebRequest): ResponseEntity<Any> {
+    override fun handleHttpMessageNotReadable(
+        exception: HttpMessageNotReadableException,
+        headers: HttpHeaders,
+        status: HttpStatus,
+        request: WebRequest
+    ): ResponseEntity<Any> {
         val response: MutableMap<String, Any> = LinkedHashMap()
         response["status"] = status.value()
         response["errors"] = "Request not valid"

@@ -35,6 +35,9 @@ data class FileRecord(
 
     @get:Column
     var dataId: String
-) {
-    fun toDto() = FileRecordDto(dataId = dataId, name = name, fileStatus = fileStatus)
+)
+
+fun FileRecord.toDto(): FileRecordDto {
+    return FileRecordDto(dataId = this.dataId, name = this.name, fileStatus = this.fileStatus)
 }
+

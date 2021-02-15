@@ -1,4 +1,4 @@
-package com.spring.fileupload.config.web
+package com.spring.fileupload.config.security
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
@@ -11,10 +11,11 @@ class WebMvcConfig : WebMvcConfigurer {
     val ALLOWED_ORIGINS = arrayOf("*")
     val ALLOWED_METHODS = arrayOf("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
 
+
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
-                .allowedOrigins(*ALLOWED_ORIGINS)
-                .allowedMethods(*ALLOWED_METHODS)
+            .allowedOrigins(*ALLOWED_ORIGINS)
+            .allowedMethods(*ALLOWED_METHODS)
     }
 
     override fun addViewControllers(registry: ViewControllerRegistry) {
@@ -24,5 +25,4 @@ class WebMvcConfig : WebMvcConfigurer {
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {}
-
 }

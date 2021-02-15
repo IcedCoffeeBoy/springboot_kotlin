@@ -1,5 +1,6 @@
 package com.spring.fileupload.filecontent.web
 
+import com.spring.fileupload.filecontent.database.toDto
 import com.spring.fileupload.filecontent.model.FileRecordDto
 import com.spring.fileupload.filecontent.model.FileStatus
 import com.spring.fileupload.filecontent.service.FileContentService
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -25,9 +27,9 @@ class FileContentController(
     private val fileContentService: FileContentService,
     private val productService: ProductService
 ) {
-
-    @GetMapping("/:dataId")
-    fun findByDataId(@RequestParam("dataId") dataId: String): ResponseEntity<FileRecordDto> {
+    @Operation(summary = "Check for uploaded file status using dataId")
+    @GetMapping("/{dataId}")
+    fun findByDataId(@PathVariable("dataId") dataId: String): ResponseEntity<FileRecordDto> {
         return ResponseEntity.ok(fileRecordService.findByDataId(dataId).toDto())
     }
 

@@ -22,13 +22,14 @@ class CSVToProductListConverter : Converter<MultipartFile, List<Product>> {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val csvFormat = CSVFormat.newFormat(',').withQuote('"').withFirstRecordAsHeader()
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/yyyy H:mm")
-    override fun convert(file: MultipartFile): List<Product> {
+
+    override fun convert(t: MultipartFile): List<Product> {
         try {
-            val inputStream: InputStream = BufferedInputStream(file.inputStream)
+            val inputStream: InputStream = BufferedInputStream(t.inputStream)
             val csvParser = CSVParser.parse(inputStream, StandardCharsets.UTF_8, csvFormat)
             return csvParser.records.stream()
                 .map { record: CSVRecord ->
-                    convertRecordToProduct(record)
+                    convertSingleRecord(record)
                 }.collect(Collectors.toList())
         } catch (e: IOException) {
             logger.error("Unable to read CSV format")
@@ -36,10 +37,9 @@ class CSVToProductListConverter : Converter<MultipartFile, List<Product>> {
         }
     }
 
-    private fun convertRecordToProduct(record: CSVRecord): Product {
+    private fun convertSingleRecord(record: CSVRecord): Product {
         return try {
             Product(
-                id = null,
                 invoiceNo = record["InvoiceNo"],
                 stockCode = record["StockCode"],
                 description = record["Description"],
@@ -47,8 +47,7 @@ class CSVToProductListConverter : Converter<MultipartFile, List<Product>> {
                 invoiceDate = LocalDateTime.from(dateTimeFormatter.parse(record["InvoiceDate"])),
                 unitPrice = record["UnitPrice"].toDouble(),
                 customerID = record["CustomerID"],
-                country = record["Country"],
-                fileRecordId = null
+                country = record["Country"]
             )
         } catch (e: DateTimeParseException) {
             logger.error(e.toString())

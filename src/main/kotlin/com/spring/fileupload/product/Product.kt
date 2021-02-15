@@ -15,7 +15,7 @@ data class Product(
         @get:GeneratedValue(generator = "uuid2")
         @get:GenericGenerator(name = "uuid2", strategy = "uuid2")
         @get:Type(type = "uuid-char")
-        var id: UUID?,
+        var id: UUID? = null,
 
         @get:Column
         var invoiceNo: String?,
@@ -42,5 +42,5 @@ data class Product(
         var country: String?,
 
         @get:Column
-        var fileRecordId: Long?,
+        var fileRecordId: Long? = null,
 )

@@ -1,4 +1,4 @@
-# File uploading using Springboot(Kotlin) and Mysql
+# Springboot(Kotlin) and Mysql
 ![Java CI with Maven](https://github.com/IcedCoffeeBoy/springboot_kotlin/workflows/Java%20CI%20with%20Maven/badge.svg)
 ___
 A sample SpringBoot to do a large file uploading and searching
@@ -34,6 +34,14 @@ The sample data for files uploading are found at `sample-data`
 
 ## Additional Information
 ### File Uploading Design
+File processing needs to be asynchronous. 
+1) After the user has uploaded the file, the contents of the file is validated. 
+Depending on the size of file, this validation may take some time to complete. 
+This is a worthwhile trade-off as most file content errors can be caught in this step. 
+2) After the file is validated, a response is given to the client and file record is generated. 
+The backend will spawn another thread to push data into the database. 
+3) After all records are successfully saved into the database, the backend will update the file record
+status to *__COMPLETED__*.
 
 
 
