@@ -23,7 +23,7 @@ class ProductService(
     }
 
     @Async
-    fun saveAll(products: List<Product?>): CompletableFuture<Boolean?> {
+    fun saveAll(products: List<Product?>): CompletableFuture<Boolean> {
         return try {
             val start = System.currentTimeMillis()
             productRepository.saveAll(products)

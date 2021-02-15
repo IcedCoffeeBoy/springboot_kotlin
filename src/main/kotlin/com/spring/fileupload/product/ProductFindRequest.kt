@@ -8,8 +8,12 @@ import javax.validation.constraints.Min
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class ProductFindRequest(
-    var pageNumber: @Min(value = 0) Int = 0,
-    var pageSize: @Min(value = 1) Int = 10,
+    @field:Min(value = 0)
+    var pageNumber: Int = 0,
+
+    @field:Min(value = 1, message = "The page size cannot be less than 1")
+    var pageSize: Int = 10,
+
     var sortingProperty: Array<ProductSortable>? = null,
     var directions: Array<Sort.Direction>? = null,
 

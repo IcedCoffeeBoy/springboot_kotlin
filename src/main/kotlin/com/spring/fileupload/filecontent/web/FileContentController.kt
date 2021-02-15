@@ -39,13 +39,12 @@ class FileContentController(
         val record = fileRecordService.validateAndSave(file)
         val recordId = record.id
         val products = fileContentService.convertToProductList(file, record)
-        productService.saveAll(products).thenApply<Any?> { outcome: Boolean? ->
-            if (outcome!!) {
+        productService.saveAll(products).thenApply { outcome: Boolean ->
+            if (outcome) {
                 fileRecordService.update(recordId, FileStatus.COMPLETED)
             } else {
                 fileRecordService.update(recordId, FileStatus.ERROR)
             }
-            null
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(record.toDto())
     }

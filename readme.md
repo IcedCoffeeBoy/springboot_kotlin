@@ -29,7 +29,12 @@ To run the test:
 mvn test 
 ```
 
-## Sample data
+## Upload function
+Go to either:
+  - http://localhost:8080/upload
+  - http://localhost:8080/swagger 
+
+For testing of the upload function. \
 The sample data for files uploading are found at `sample-data`
 
 ## Additional Information

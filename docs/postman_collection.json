@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "c7b7d4d9-5cff-4b7e-8692-1cc34dee23a9",
+		"name": "File Uploader",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload a file containing products",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "officia sint",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/file",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check for uploaded file status using dataId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/file/:dataId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"file",
+						":dataId"
+					],
+					"variable": [
+						{
+							"key": "dataId",
+							"value": "laboris qui sit et",
+							"type": "string",
+							"description": "(Required) "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List/Search of product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/product?pageNumber=0&pageSize=10&sortingProperty=INVOICE_DATE&directions=DESC&fromDate=2010-06-01&toDate=2020-11-15&fromPrice=0&toPrice=10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"product"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "0"
+						},
+						{
+							"key": "pageSize",
+							"value": "10",
+							"description": " "
+						},
+						{
+							"key": "sortingProperty",
+							"value": "INVOICE_DATE"
+						},
+						{
+							"key": "directions",
+							"value": "DESC"
+						},
+						{
+							"key": "fromDate",
+							"value": "2010-06-01"
+						},
+						{
+							"key": "toDate",
+							"value": "2020-11-15"
+						},
+						{
+							"key": "fromPrice",
+							"value": "0"
+						},
+						{
+							"key": "toPrice",
+							"value": "10"
+						},
+						{
+							"key": "minQuantity",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "maxQuantity",
+							"value": "999",
+							"disabled": true
+						},
+						{
+							"key": "invoiceNo",
+							"value": "dolore tempor mollit ad ut",
+							"disabled": true
+						},
+						{
+							"key": "stockCode",
+							"value": "et nostrud voluptate",
+							"disabled": true
+						},
+						{
+							"key": "customerID",
+							"value": "cillum sed dolor ullamco",
+							"disabled": true
+						},
+						{
+							"key": "country",
+							"value": "in officia quis sed enim",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "aliquip",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "<Bearer Token>",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
