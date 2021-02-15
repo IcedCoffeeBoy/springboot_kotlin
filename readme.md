@@ -9,6 +9,8 @@ Run the following commands:
 docker-compose up -d 
 ```
 ## Api Definitions
+### Postman Document
+The postman json is found at `docs/postman_collection.json`
 ### Swagger UI
 The project is set up with swagger.\
 To open the swagger: http://localhost:8080/swagger
@@ -18,7 +20,7 @@ Download at http://localhost:8080/v3/api-docs \
 Note: Postman supports importing of OpenApi 3.0 Specification JSON 
 
 ## Unit tests
-The application uses JUnit and mockit framework for testing. 
+The application uses JUnit and mockit framework for testing.
 ### Design Considerations
 The unit test uses in-memory H2 database. It is able to be run independently 
 without the presence of external database. This helps to solve issues when running 
