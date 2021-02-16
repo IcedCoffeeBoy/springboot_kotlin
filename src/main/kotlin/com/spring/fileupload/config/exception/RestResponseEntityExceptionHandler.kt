@@ -51,12 +51,12 @@ class RestResponseEntityExceptionHandler() : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(value = [ValidationException::class])
     protected fun handleValidationException(
-        exception: BusinessException,
+        ex: ValidationException,
         request: HttpServletRequest
     ): ResponseEntity<ErrorResponse> {
-        logger.error(exception.toString())
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
-            ErrorResponse(error = "VALIDATION_FAILED", reason = exception.message, path = request.requestURI)
+        logger.error(ex.toString())
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ErrorResponse(error = "VALIDATION_FAILED", reason = ex.message, path = request.requestURI)
         )
     }
 
@@ -67,7 +67,7 @@ class RestResponseEntityExceptionHandler() : ResponseEntityExceptionHandler() {
         request: WebRequest
     ): ResponseEntity<Any> {
         logger.error(ex.toString())
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
             ErrorResponse(error = "VALIDATION_FAILED", reason = ex.fieldError?.defaultMessage)
         )
     }
@@ -81,8 +81,8 @@ class RestResponseEntityExceptionHandler() : ResponseEntityExceptionHandler() {
         logger.error(
             String.format("Api method argument not valid for %s", ex.message)
         )
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            ErrorResponse(error = "INPUTS_ERROR", reason = ex.message)
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(
+            ErrorResponse(error = "INPUTS_ERROR", reason = ex.fieldError?.defaultMessage)
         )
     }
 

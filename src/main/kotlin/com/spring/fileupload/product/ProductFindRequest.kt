@@ -30,15 +30,15 @@ data class ProductFindRequest(
     var minQuantity: Long? = null,
     @field:Min(value = 0, message = "The max quantity cannot be less than 0")
     var maxQuantity: Long? = null,
-    @field:Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Only alphanumeric string are allowed in invoiceNo")
+    @field:Pattern(regexp = "^[a-zA-Z0-9,. ]*$", message = "Only alphanumeric string are allowed in invoiceNo")
     var invoiceNo: String? = null,
-    @field:Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Only alphanumeric string are allowed in stockCode")
+    @field:Pattern(regexp = "^[a-zA-Z0-9,. ]*$", message = "Only alphanumeric string are allowed in stockCode")
     var stockCode: String? = null,
-    @field:Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Only alphanumeric string are allowed in customerID")
+    @field:Pattern(regexp = "^[a-zA-Z0-9,. ]*$", message = "Only alphanumeric string are allowed in customerID")
     var customerID: String? = null,
-    @field:Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Only alphanumeric string are allowed in country")
+    @field:Pattern(regexp = "^[a-zA-Z0-9,. ]*$", message = "Only alphanumeric string are allowed in country")
     var country: String? = null,
-    @field:Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Only alphanumeric string are allowed in description")
+    @field:Pattern(regexp = "^[a-zA-Z0-9,. ]*$", message = "Only alphanumeric string are allowed in description")
     var description: String? = null,
 ) {
     override fun equals(other: Any?): Boolean {
