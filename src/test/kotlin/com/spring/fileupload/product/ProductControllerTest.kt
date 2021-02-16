@@ -51,7 +51,7 @@ class ProductControllerTest {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect { result ->
                 val body = objectMapper.readValue(result.response.contentAsString, Map::class.java)
-                val outputPageNumber =body["pageNumber"]
+                val outputPageNumber = body["pageNumber"]
                 val outputPageSize = body["pageSize"]
                 val products = objectMapper.convertValue(body["content"], object : TypeReference<List<Product?>?>() {})
                 assert(outputPageNumber == pageNumber)

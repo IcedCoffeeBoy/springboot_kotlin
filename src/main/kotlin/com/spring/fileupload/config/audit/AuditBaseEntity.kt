@@ -13,23 +13,23 @@ import javax.persistence.Version
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-open class AuditBaseEntity {
-    @Version
-    private val version: Long? = null
+open class AuditBaseEntity(
+    @get:Version
+    var version: Long? = null,
 
-    @Column
+    @get:Column
     @CreatedBy
-    private val createdBy: String? = null
+    var createdBy: String? = null,
 
-    @Column
-    @CreatedDate
-    private val createdDate: LocalDateTime? = null
+    @get:Column
+    @get:CreatedDate
+    var createdDate: LocalDateTime? = null,
 
-    @Column
-    @LastModifiedBy
-    private val lastModifiedBy: String? = null
+    @get:Column
+    @get:LastModifiedBy
+    var lastModifiedBy: String? = null,
 
-    @Column
-    @LastModifiedDate
-    private val lastModifiedDate: LocalDateTime? = null
-}
+    @get:Column
+    @get:LastModifiedDate
+    var lastModifiedDate: LocalDateTime? = null
+)

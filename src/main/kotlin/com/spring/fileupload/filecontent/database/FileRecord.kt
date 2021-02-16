@@ -1,5 +1,6 @@
 package com.spring.fileupload.filecontent.database
 
+import com.spring.fileupload.config.audit.AuditBaseEntity
 import com.spring.fileupload.filecontent.model.FileRecordDto
 import com.spring.fileupload.filecontent.model.FileStatus
 import javax.persistence.Column
@@ -35,7 +36,7 @@ data class FileRecord(
 
     @get:Column
     var dataId: String
-)
+) : AuditBaseEntity()
 
 fun FileRecord.toDto(): FileRecordDto {
     return FileRecordDto(dataId = this.dataId, name = this.name, fileStatus = this.fileStatus)
