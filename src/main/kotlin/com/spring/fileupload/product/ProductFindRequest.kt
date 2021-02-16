@@ -8,7 +8,7 @@ import javax.validation.constraints.Min
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class ProductFindRequest(
-    @field:Min(value = 0)
+    @field:Min(value = 0, message = "The page number cannot be less than 0")
     var pageNumber: Int = 0,
 
     @field:Min(value = 1, message = "The page size cannot be less than 1")
@@ -19,12 +19,15 @@ data class ProductFindRequest(
 
     @field:DateTimeFormat(pattern = "yyyy-MM-dd")
     var fromDate: LocalDate? = null,
-
     @field:DateTimeFormat(pattern = "yyyy-MM-dd")
     var toDate: LocalDate? = null,
+    @field:Min(value = 0, message = "The from price cannot be less than 0")
     var fromPrice: Double? = null,
+    @field:Min(value = 0, message = "The to price cannot be less than 0")
     var toPrice: Double? = null,
+    @field:Min(value = 0, message = "The min quantity cannot be less than 0")
     var minQuantity: Long? = null,
+    @field:Min(value = 0, message = "The max quantity cannot be less than 0")
     var maxQuantity: Long? = null,
     var invoiceNo: String? = null,
     var stockCode: String? = null,

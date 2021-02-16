@@ -8,17 +8,17 @@ import org.springframework.data.jpa.domain.Specification
 class ProductSpecificationsBuilder {
     fun toSpecification(request: ProductFindRequest): Specification<Product>? {
         var spec = Specification.where<Product?>(null)
-        request.fromDate?.let { spec = spec?.and(ProductSpecifications.startInvoiceDate(it)) }
-        request.toDate?.let { spec = spec?.and(ProductSpecifications.endInvoiceDate(it)) }
-        request.fromPrice?.let { spec = spec?.and(ProductSpecifications.fromPrice(it)) }
-        request.toPrice?.let { spec = spec?.and(ProductSpecifications.toPrice(it)) }
-        request.minQuantity?.let { spec = spec?.and(ProductSpecifications.minQuantity(it)) }
-        request.maxQuantity?.let { spec = spec?.and(ProductSpecifications.maxQuantity(it)) }
-        request.invoiceNo?.let { spec = spec?.and(ProductSpecifications.byInvoiceNo(it)) }
-        request.stockCode?.let { spec = spec?.and(ProductSpecifications.byStockCode(it)) }
-        request.customerID?.let { spec = spec?.and(ProductSpecifications.byCustomerId(it)) }
-        request.country?.let { spec = spec?.and(ProductSpecifications.byCountry(it)) }
-        request.description?.let { spec = spec?.and(ProductSpecifications.descriptionsContains(it)) }
+        request.fromDate?.let { spec = spec.and(ProductSpecifications.startInvoiceDate(it)) }
+        request.toDate?.let { spec = spec.and(ProductSpecifications.endInvoiceDate(it)) }
+        request.fromPrice?.let { spec = spec.and(ProductSpecifications.fromPrice(it)) }
+        request.toPrice?.let { spec = spec.and(ProductSpecifications.toPrice(it)) }
+        request.minQuantity?.let { spec = spec.and(ProductSpecifications.minQuantity(it)) }
+        request.maxQuantity?.let { spec = spec.and(ProductSpecifications.maxQuantity(it)) }
+        request.invoiceNo?.let { spec = spec.and(ProductSpecifications.byInvoiceNo(it)) }
+        request.stockCode?.let { spec = spec.and(ProductSpecifications.byStockCode(it)) }
+        request.customerID?.let { spec = spec.and(ProductSpecifications.byCustomerId(it)) }
+        request.country?.let { spec = spec.and(ProductSpecifications.byCountry(it)) }
+        request.description?.let { spec = spec.and(ProductSpecifications.descriptionsContains(it)) }
         return spec
     }
 
