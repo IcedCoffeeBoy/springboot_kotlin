@@ -5,20 +5,23 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.jpa.domain.Specification
 
+/**
+ * Builds specification and pageable from Request
+ */
 class ProductSpecificationsBuilder {
-    fun toSpecification(request: ProductFindRequest): Specification<Product>? {
+    fun toSpecification(request: ProductFindRequest): Specification<Product> {
         var spec = Specification.where<Product?>(null)
-        request.fromDate?.let { spec = spec.and(ProductSpecifications.startInvoiceDate(it)) }
-        request.toDate?.let { spec = spec.and(ProductSpecifications.endInvoiceDate(it)) }
-        request.fromPrice?.let { spec = spec.and(ProductSpecifications.fromPrice(it)) }
-        request.toPrice?.let { spec = spec.and(ProductSpecifications.toPrice(it)) }
-        request.minQuantity?.let { spec = spec.and(ProductSpecifications.minQuantity(it)) }
-        request.maxQuantity?.let { spec = spec.and(ProductSpecifications.maxQuantity(it)) }
-        request.invoiceNo?.let { spec = spec.and(ProductSpecifications.byInvoiceNo(it)) }
-        request.stockCode?.let { spec = spec.and(ProductSpecifications.byStockCode(it)) }
-        request.customerID?.let { spec = spec.and(ProductSpecifications.byCustomerId(it)) }
-        request.country?.let { spec = spec.and(ProductSpecifications.byCountry(it)) }
-        request.description?.let { spec = spec.and(ProductSpecifications.descriptionsContains(it)) }
+        request.fromDate?.let { spec = spec.and(startInvoiceDate(it)) }
+        request.toDate?.let { spec = spec.and(endInvoiceDate(it)) }
+        request.fromPrice?.let { spec = spec.and(fromPrice(it)) }
+        request.toPrice?.let { spec = spec.and(toPrice(it)) }
+        request.minQuantity?.let { spec = spec.and(minQuantity(it)) }
+        request.maxQuantity?.let { spec = spec.and(maxQuantity(it)) }
+        request.invoiceNo?.let { spec = spec.and(byInvoiceNo(it)) }
+        request.stockCode?.let { spec = spec.and(byStockCode(it)) }
+        request.customerID?.let { spec = spec.and(byCustomerId(it)) }
+        request.country?.let { spec = spec.and(byCountry(it)) }
+        request.description?.let { spec = spec.and(descriptionsContains(it)) }
         return spec
     }
 
@@ -29,7 +32,7 @@ class ProductSpecificationsBuilder {
         val orders = arrayOfNulls<Sort.Order>(request.sortingProperty!!.size)
         for (i in request.sortingProperty!!.indices) {
             if (request.directions != null && i < request.directions!!.size) {
-                orders[i] = Sort.Order(request.directions!!.get(i), request.sortingProperty!![i].label)
+                orders[i] = Sort.Order(request.directions!![i], request.sortingProperty!![i].label)
             } else {
                 orders[i] = Sort.Order(Sort.Direction.ASC, request.sortingProperty!![i].label)
             }
