@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import java.io.File
 import java.io.FileInputStream
 
+@Order(2)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")

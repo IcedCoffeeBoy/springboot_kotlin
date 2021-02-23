@@ -20,6 +20,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
+@Order(3)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
