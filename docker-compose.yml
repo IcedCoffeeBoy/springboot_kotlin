@@ -29,7 +29,7 @@ services:
       SPRING_DATASOURCE_USERNAME: springuser
       SPRING_DATASOURCE_PASSWORD: 123456
       SWAGGER_SERVICE: "true"
-    mem_limit: 512m
+    mem_limit: 2048m
     ports:
       - 8080:8080
     links:
